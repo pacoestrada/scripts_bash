@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# Instala 'yad' si no está instalado
+if ! command -v yad >/dev/null 2>&1; then
+  echo "Instalando dependencias..."
+  sudo apt-get update
+  sudo apt-get install -y yad
+fi
+
 # URL de la imagen del icono
 ICON_URL="https://drive.google.com/uc?id=1kUqXG_wiTjL5R8QVAyXrBtgYNsAUAaxM"
 
 # Cuadro de diálogo de bienvenida
-zenity --info --title="Bienvenido" --text="Bienvenido al creador de lanzador para Anaconda Navigator" --width=300
+yad --title="Bienvenido" --text="Bienvenido al creador de lanzador para Anaconda Navigator" --width=300 --button="Continuar"
 
 # Obtén el nombre de usuario y la ruta de instalación de Anaconda
 USERNAME=$(whoami)
@@ -12,7 +19,7 @@ ANACONDA_PATH=$(which conda | sed 's/\/bin\/conda//g')
 
 # Verifica si Anaconda está instalado
 if [ -z "$ANACONDA_PATH" ]; then
-  zenity --error --text="Anaconda no está instalado en tu sistema. Por favor, instálalo antes de ejecutar este script."
+  yad --error --text="Anaconda no está instalado en tu sistema. Por favor, instálalo antes de ejecutar este script."
   exit 1
 fi
 
@@ -43,4 +50,4 @@ cp "/home/$USERNAME/Escritorio/anaconda-navigator.desktop" "/home/$USERNAME/.loc
 # Cuadro de diálogo de éxito con texto HTML
 SUCCESS_TEXT="<html><body><p>Lanzador de <b><font color='red'>Anaconda Navigator</font></b> creado en el escritorio y el menú de aplicaciones.</p><p>Debe <b><font color='red'>permitir que se ejecute como programa</font></b> el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y <b><font color='red'>permitir ejecutar</font></b>.</p><p>Recuerde que <b><font color='red'>Anaconda Navigator es lento abriéndose</font></b>, dependiendo de las características de su equipo. <b><font color='red'>SEA PACIENTE</font></b>, por favor.</p><p>Gracias por usar este creador de lanzador para Anaconda Navigator.</p></body></html>"
 
-zenity --text-info --html --title
+yad --text-info --html --title="Éxito" --text="$SUCCESS
