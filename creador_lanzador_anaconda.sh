@@ -47,7 +47,11 @@ chmod +x "/home/$USERNAME/Escritorio/anaconda-navigator.desktop"
 # Copia el archivo .desktop en la carpeta de aplicaciones
 cp "/home/$USERNAME/Escritorio/anaconda-navigator.desktop" "/home/$USERNAME/.local/share/applications/"
 
-# Cuadro de diálogo de éxito con texto HTML
-SUCCESS_TEXT="<html><body><p>Lanzador de <b><font color='red'>Anaconda Navigator</font></b> creado en el escritorio y el menú de aplicaciones.</p><p>Debe <b><font color='red'>permitir que se ejecute como programa</font></b> el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y <b><font color='red'>permitir ejecutar</font></b>.</p><p>Recuerde que <b><font color='red'>Anaconda Navigator es lento abriéndose</font></b>, dependiendo de las características de su equipo. <b><font color='red'>SEA PACIENTE</font></b>, por favor.</p><p>Gracias por usar este creador de lanzador para Anaconda Navigator.</p></body></html>"
+# Cuadro de diálogo de éxito con formulario
+SUCCESS_FORM=$(cat <<EOL
+--title="Éxito" --form --width=500 --height=300 \
+--field="<b><span foreground='red'>Anaconda Navigator creado en el escritorio y el menú de aplicaciones:</span></b>\nDebe permitir que se ejecute como programa el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y permitir ejecutar.\nAnaconda Navigator es lento abriéndose. <b><span foreground='red'>SEA PACIENTE</span></b>, por favor." '' \
+EOL
+)
 
-yad --text-info --html --title="Éxito" --text="$SUCCESS
+yad $SUCCESS_FORM
