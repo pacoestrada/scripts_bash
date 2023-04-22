@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Anaconda Navigator
+GenericName=Anaconda
+Comment=Launch Anaconda Navigator
+Exec=bash -i -c 'anaconda-navigator'
+Icon=/home/yo/imagenes/anaconda_logo.png
+Terminal=false
+Categories=Development;Science;IDE;
+StartupWMClass=Anaconda Navigator
