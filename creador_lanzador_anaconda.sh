@@ -16,57 +16,31 @@ if [ -z "$ANACONDA_PATH" ]; then
   exit 1
 fi
 
-# Comprueba si conda.sh existe y si es así, carga el archivo
-if [ -f "$ANACONDA_PATH/etc/profile.d/conda.sh" ]; then
-    source "$ANACONDA_PATH/etc/profile.d/conda.sh"
-else
-    # Si conda.sh no existe, intenta agregar la ruta de Anaconda a PATH y activar conda de esta manera
-    export PATH="$ANACONDA_PATH/bin:$PATH"
-fi
+# Descarga el icono y colócalo en la carpeta de imágenes del usuario
+mkdir -p "/home/$USERNAME/imagenes"
+wget -O "/home/$USERNAME/imagenes/anaconda-navigator.png" "$ICON_URL"
 
-# Asegúrate de que conda está activado en el entorno base
-conda activate base
-
-
-# Cuadro de diálogo para confirmar el nombre de usuario
-zenity --question --title="Nombre de usuario" --text="¿Es $USERNAME tu nombre de usuario?" --width=300
-if [ $? -ne 0 ]; then
-  zenity --error --text="El nombre de usuario no coincide. Por favor, verifica tu nombre de usuario y vuelve a intentarlo."
-  exit 1
-fi
-
-# Cuadro de diálogo para confirmar la ruta de instalación de Anaconda
-zenity --question --title="Ruta de instalación de Anaconda" --text="La ruta de instalación de Anaconda es:\n$ANACONDA_PATH\n¿Es correcto?" --width=300
-if [ $? -ne 0 ]; then
-  zenity --error --text="La ruta de instalación de Anaconda no es correcta. Por favor, verifica la ruta de instalación y vuelve a intentarlo."
-  exit 1
-fi
-
-# Descarga y guarda el icono en la carpeta de imágenes del usuario
-ICON_FOLDER="/home/$USERNAME/imagenes"
-mkdir -p "$ICON_FOLDER"
-wget -O "$ICON_FOLDER/anaconda_logo.png" "$ICON_URL"
-
-# Crea el archivo .desktop
-# Crea el archivo .desktop
-DESKTOP_FILE_CONTENT="[Desktop Entry]
+# Crea un archivo .desktop para el lanzador de Anaconda Navigator
+cat > "/home/$USERNAME/Escritorio/anaconda-navigator.desktop" << EOL
+[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Anaconda Navigator
-GenericName=Anaconda
-Comment=Launch Anaconda Navigator
-Exec=bash -i -c 'anaconda-navigator'
-Icon=$ICON_FOLDER/anaconda_logo.png
+GenericName=Anaconda Navigator
+Comment=Inicie Anaconda Navigator
+Exec=bash -c "source $ANACONDA_PATH/etc/profile.d/conda.sh && conda activate base && anaconda-navigator"
+Icon=/home/$USERNAME/imagenes/anaconda-navigator.png
 Terminal=false
-Categories=Development;Science;IDE;
-StartupWMClass=Anaconda Navigator"
+Categories=Development;IDE;
+EOL
 
-echo "$DESKTOP_FILE_CONTENT" > anaconda-navigator.desktop
-# Copia el archivo .desktop a las ubicaciones correspondientes
-cp anaconda-navigator.desktop ~/Escritorio/
-chmod +x ~/Escritorio/anaconda-navigator.desktop
-sudo cp anaconda-navigator.desktop /usr/share/applications/
-rm anaconda-navigator.desktop
+# Hacer el lanzador ejecutable
+chmod +x "/home/$USERNAME/Escritorio/anaconda-navigator.desktop"
 
-# Cuadro de diálogo de éxito
-zenity --info --title="Éxito" --text="Lanzador de Anaconda Navigator creado en el escritorio y el menú de aplicaciones.\n\nDebe permitir que se ejecute como programa el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y permitir ejecutar. Recuerde que Anaconda Navigator es lento abriéndose, dependiendo de las características de su equipo. Sea paciente, por favor.\n\nGracias por usar este creador de lanzador para Anaconda Navigator." --width=400
+# Copia el archivo .desktop en la carpeta de aplicaciones
+cp "/home/$USERNAME/Escritorio/anaconda-navigator.desktop" "/home/$USERNAME/.local/share/applications/"
+
+# Cuadro de diálogo de éxito con texto HTML
+SUCCESS_TEXT="<html><body><p>Lanzador de <b><font color='red'>Anaconda Navigator</font></b> creado en el escritorio y el menú de aplicaciones.</p><p>Debe <b><font color='red'>permitir que se ejecute como programa</font></b> el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y <b><font color='red'>permitir ejecutar</font></b>.</p><p>Recuerde que <b><font color='red'>Anaconda Navigator es lento abriéndose</font></b>, dependiendo de las características de su equipo. <b><font color='red'>SEA PACIENTE</font></b>, por favor.</p><p>Gracias por usar este creador de lanzador para Anaconda Navigator.</p></body></html>"
+
+zenity --text-info --html --title
