@@ -36,20 +36,20 @@ mkdir -p "$ICON_FOLDER"
 wget -O "$ICON_FOLDER/anaconda_logo.png" "$ICON_URL"
 
 # Crea el archivo .desktop
+# Crea el archivo .desktop
 DESKTOP_FILE_CONTENT="[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Anaconda Navigator
 GenericName=Anaconda
 Comment=Launch Anaconda Navigator
-Exec=bash -c 'export PATH=\"$ANACONDA_PATH/bin:$PATH\" && anaconda-navigator'
+Exec=bash -i -c 'anaconda-navigator'
 Icon=$ICON_FOLDER/anaconda_logo.png
 Terminal=false
 Categories=Development;Science;IDE;
 StartupWMClass=Anaconda Navigator"
 
 echo "$DESKTOP_FILE_CONTENT" > anaconda-navigator.desktop
-
 # Copia el archivo .desktop a las ubicaciones correspondientes
 cp anaconda-navigator.desktop ~/Escritorio/
 chmod +x ~/Escritorio/anaconda-navigator.desktop
