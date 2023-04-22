@@ -16,6 +16,11 @@ if [ -z "$ANACONDA_PATH" ]; then
   exit 1
 fi
 
+# Asegúrate de que conda está activado en el entorno base
+source $ANACONDA_PATH/etc/profile.d/conda.sh
+conda activate base
+
+
 # Cuadro de diálogo para confirmar el nombre de usuario
 zenity --question --title="Nombre de usuario" --text="¿Es $USERNAME tu nombre de usuario?" --width=300
 if [ $? -ne 0 ]; then
@@ -57,4 +62,4 @@ sudo cp anaconda-navigator.desktop /usr/share/applications/
 rm anaconda-navigator.desktop
 
 # Cuadro de diálogo de éxito
-zenity --info --title="Éxito" --text="Lanzador de Anaconda Navigator creado en el escritorio y el menú de aplicaciones." --width=300
+zenity --info --title="Éxito" --text="Lanzador de Anaconda Navigator creado en el escritorio y el menú de aplicaciones.\n\nDebe permitir que se ejecute como programa el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y permitir ejecutar. Recuerde que Anaconda Navigator es lento abriéndose, dependiendo de las características de su equipo. Sea paciente, por favor.\n\nGracias por usar este creador de lanzador para Anaconda Navigator." --width=400
