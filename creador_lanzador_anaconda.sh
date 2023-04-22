@@ -51,8 +51,8 @@ StartupWMClass=Anaconda Navigator"
 echo "$DESKTOP_FILE_CONTENT" > anaconda-navigator.desktop
 
 # Copia el archivo .desktop a las ubicaciones correspondientes
-cp anaconda-navigator.desktop ~/Desktop/
-chmod +x ~/Desktop/anaconda-navigator.desktop
+cp anaconda-navigator.desktop ~/Escritorio/
+chmod +x ~/Escritorio/anaconda-navigator.desktop
 sudo cp anaconda-navigator.desktop /usr/share/applications/
 rm anaconda-navigator.desktop
 
