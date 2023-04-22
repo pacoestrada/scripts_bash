@@ -45,5 +45,5 @@ zenity --info --title="Éxito" --text="Anaconda Navigator creado en el escritori
 
 
 Debe permitir que se ejecute como programa el nuevo icono creado. Para ello, sitúese sobre el nuevo icono creado y pulse botón derecho (secundario) y permitir ejecutar.
-Anaconda Navigator es lento abriéndose. SEA PACIENTE, por favor." --width=500 --height=1500 --ok-label="Finalizar"
+Anaconda Navigator es lento abriéndose. SEA PACIENTE, por favor." --width=500 --height=150 --ok-label="Finalizar"
 
