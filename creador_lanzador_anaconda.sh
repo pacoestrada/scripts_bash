@@ -16,8 +16,15 @@ if [ -z "$ANACONDA_PATH" ]; then
   exit 1
 fi
 
+# Comprueba si conda.sh existe y si es así, carga el archivo
+if [ -f "$ANACONDA_PATH/etc/profile.d/conda.sh" ]; then
+    source "$ANACONDA_PATH/etc/profile.d/conda.sh"
+else
+    # Si conda.sh no existe, intenta agregar la ruta de Anaconda a PATH y activar conda de esta manera
+    export PATH="$ANACONDA_PATH/bin:$PATH"
+fi
+
 # Asegúrate de que conda está activado en el entorno base
-source $ANACONDA_PATH/etc/profile.d/conda.sh
 conda activate base
 
 
