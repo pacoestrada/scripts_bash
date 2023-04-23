@@ -53,5 +53,5 @@ sudo cp anaconda-navigator.desktop /usr/share/applications/
 rm anaconda-navigator.desktop
 # Cuadro de diálogo de éxito
 zenity --info --title="Éxito" --text="Lanzador de Anaconda Navigator creado en el escritorio y el menú de aplicaciones.
-                                      Anaconda Exploreres lento abriendose, SE PACIENTE.
-                                      Recuerda dar permisos de ejecución al icono recien creado" --width=300
+                                                   Anaconda Explorer es lento abriendose, SE PACIENTE.
+                                                   Recuerda dar permisos de ejecución al icono recien creado" --width=300
